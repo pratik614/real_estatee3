@@ -1,5 +1,6 @@
 import React from 'react'
 import { BrowserRouter as Router , Routes, Route } from 'react-router-dom'
+import Header from './components/Header'
 import About from './pages/About'
 import Login from './pages/Auth/Login'
 import Register from './pages/Auth/Register'
@@ -9,6 +10,7 @@ import Profile from './pages/Profile'
 const App = () => {
   return (
   <Router>
+    <Header />
     <Routes>
       <Route path='/' element={<Home />}/>
       <Route path='/about' element={<About />}/>
