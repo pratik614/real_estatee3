@@ -48,12 +48,16 @@ export const userLogin = async (req, res) => {
         }
         else{
             const token  = jwt.sign({_id:existingUser._id},process.env.SALT,{
-                expiresIn:"5D"
+                expiresIn:"5D",
+                
             });
+            const {password : pass, ...rest} = existingUser._doc;  //not sending pass to frontend
+
             return res.status(201).json({
                 success:true,
                 message:"logged in successfully",
-                token
+                rest,
+                data:token
             })
         }
 

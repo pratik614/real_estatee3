@@ -1,6 +1,8 @@
 import React from 'react'
 import { useState } from 'react';
-import { Link } from 'react-router-dom'
+import { toast } from 'react-hot-toast';
+import { Link, useNavigate } from 'react-router-dom'
+import { loginPage } from '../../services/Api';
 
 const defaultLogin = {
     email: '',
@@ -8,14 +10,26 @@ const defaultLogin = {
 };
 const Login = () => {
     const [login, setLogin] = useState(defaultLogin);
-
+const navigate = useNavigate();
     const changeFunction=(e)=>{
         setLogin({...login,[e.target.name]:e.target.value})
     };
 
-    const formSubmit=(e)=>{
+    const formSubmit= async(e)=>{
         e.preventDefault();
-        console.log(login)
+        try {
+            let response = await loginPage(login)
+            if(response.data.success===true){
+                localStorage.setItem("token",response.data.data)
+                toast.success(response.data.message);
+                 navigate("/");
+               }
+               else{
+                toast.error(response.data.message)
+               }
+        } catch (error) {
+           
+        }
     }
 
 
